@@ -1,7 +1,18 @@
-__pycache__
+# Github ignore
 .ipynb_checkpoints
 .vscode
 .idea
 .pypirc
+.vscode
+
+# project ignore
+__pycache__
+*.pyc
+*__pycache__
+log/
+output/
+data/datasets/
+
+# qt GUI file
+build
 dist
-torchlib.egg-info

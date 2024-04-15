@@ -1,24 +1,21 @@
 # PyTorch Project Template
+
 A simple and well designed structure is essential for any Deep Learning project, so after a lot practice and contributing in pytorch projects here's a pytorch project template that combines **simplicity, best practice for folder structure** and **good OOP design**. 
 The main idea is that there's much same stuff you do every time when you start your pytorch project, so wrapping all this shared stuff will help you to change just the core idea every time you start a new pytorch project. 
 
-**So, here’s a simple pytorch template that help you get into your main project faster and just focus on your core (Model Architecture, Training Flow, etc)**
+So, here’s a simple pytorch template that help you get into your main project faster and just focus on your core (Model Architecture, Training Flow, etc)
 
 In order to decrease repeated stuff, we recommend to use a high-level library. You can write your own high-level library or you can just use some third-part libraries such as [ignite](https://github.com/pytorch/ignite), [fastai](https://github.com/fastai/fastai), [mmcv](https://github.com/open-mmlab/mmcv) … etc. This can help you write compact but full-featured training loops in a few lines of code. Here we use ignite to train mnist as an example.
 
-# Requirements
+## Requirements
+
 - [yacs](https://github.com/rbgirshick/yacs) (Yet Another Configuration System)
 - [PyTorch](https://pytorch.org/) (An open source deep learning platform) 
 - [ignite](https://github.com/pytorch/ignite) (High-level library to help with training neural networks in PyTorch)
+- [loguru]
 
-# Table Of Contents
--  [In a Nutshell](#in-a-nutshell)
--  [In Details](#in-details)
--  [Future Work](#future-work)
--  [Contributing](#contributing)
--  [Acknowledgments](#acknowledgments)
+## In a Nutshell
 
-# In a Nutshell   
 In a nutshell here's how to use this template, so **for example** assume you want to implement ResNet-18 to train mnist, so you should do the following:
 - In `modeling`  folder create a python file named whatever you like, here we named it `example_model.py` . In `modeling/__init__.py` file, you can build a function named `build_model` to call your model
 
@@ -80,9 +77,6 @@ do_train(cfg, model, train_loader, val_loader, optimizer, None, F.cross_entropy)
 ├──  config
 │    └── defaults.py  - here's the default config file.
 │
-│
-├──  configs  
-│    └── train_mnist_softmax.yml  - here's the specific config file for specific model or dataset.
 │ 
 │
 ├──  data  
@@ -97,9 +91,6 @@ do_train(cfg, model, train_loader, val_loader, optimizer, None, F.cross_entropy)
 │   └── inference.py   - this file contains the inference process.
 │
 │
-├── layers              - this folder contains any customed layers of your project.
-│   └── conv_layer.py
-│
 │
 ├── modeling            - this folder contains any model of your project.
 │   └── example_model.py
@@ -110,27 +101,8 @@ do_train(cfg, model, train_loader, val_loader, optimizer, None, F.cross_entropy)
 │   └── lr_scheduler.py
 │   
 │ 
-├──  tools                - here's the train/test model of your project.
-│    └── train_net.py  - here's an example of train model that is responsible for the whole pipeline.
-│ 
 │ 
 └── utils
-│    ├── logger.py
-│    └── any_other_utils_you_need
-│ 
-│ 
-└── tests					- this foler contains unit test of your project.
-     ├── test_data_sampler.py
+     ├── logger.py
+     └── any_other_utils_you_need
 ```
-
-
-# Future Work
-
-# Contributing
-Any kind of enhancement or contribution is welcomed.
-
-
-# Acknowledgments
-
-
-
