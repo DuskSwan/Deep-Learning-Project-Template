@@ -1,30 +1,32 @@
 # encoding: utf-8
-"""
-@author:  sherlock
-@contact: sherlockliao01@gmail.com
-"""
 
-import logging
-import os
-import sys
+import time
+from loguru import logger
+from pathlib import Path
 
 
-def setup_logger(name, save_dir, distributed_rank):
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG)
-    # don't log results for the non-master process
-    if distributed_rank > 0:
-        return logger
-    ch = logging.StreamHandler(stream=sys.stdout)
-    ch.setLevel(logging.DEBUG)
-    formatter = logging.Formatter("%(asctime)s %(name)s %(levelname)s: %(message)s")
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
+def initiate_cfg(cfg,merge_file = ''):
+    '''
+    Initiate the cfg object with the default config file and the extra config file. 
+    The cfg will be frozen after initiation.
+    '''
+    if(merge_file): logger.info("Try to merge from {}.".format(merge_file))
+    else: logger.info("No extra config file to merge.")
 
-    if save_dir:
-        fh = logging.FileHandler(os.path.join(save_dir, "log.txt"), mode='w')
-        fh.setLevel(logging.DEBUG)
-        fh.setFormatter(formatter)
-        logger.addHandler(fh)
+    extra_cfg = Path(merge_file)
+    if extra_cfg.exists() and extra_cfg.suffix == '.yml':
+        cfg.merge_from_file(extra_cfg)
+        logger.info("Merge successfully.")
+    else:
+        logger.info("Wrong file path or file type of extra config file.")
 
-    return logger
+    cfg.DESIGN.FSUBLEN = cfg.DESIGN.M + cfg.DESIGN.P
+    cfg.DESIGN.PIECE = cfg.DESIGN.FPIECE * (cfg.DESIGN.M + cfg.DESIGN.P)
+
+    cfg.freeze()
+
+    if(cfg.LOG.OUTPUT_TO_FILE): 
+        logger.info("Output to file.")
+        cur_time = time.strftime('%Y-%m-%d-%H-%M-%S', time.localtime())
+        logger.add(cfg.LOG.DIR + f'/{cfg.LOG.PREFIX}_{cur_time}.log', rotation='1 day', encoding='utf-8')
+    else: logger.info("Output to console.")
