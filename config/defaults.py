@@ -59,6 +59,7 @@ _C.TRAIN = CN()
 _C.TRAIN.BATCH_SIZE = 32
 _C.TRAIN.CHECKPOINT_PERIOD = 10
 _C.TRAIN.NEED_CHRCKPOINT = False
+_C.TRAIN.DATA_PATH = r''
 
 # -----------------------------------------------------------------------------
 # INFERENCE
@@ -66,7 +67,7 @@ _C.TRAIN.NEED_CHRCKPOINT = False
 _C.INFERENCE = CN()
 _C.INFERENCE.BATCH_SIZE = 1
 _C.INFERENCE.MODEL_PATH = r'output\model.pth'
-_C.INFERENCE.TEST_CONTENT = r''
+_C.INFERENCE.DATA_PATH = r''
 
 # ---------------------------------------------------------------------------- #
 # Solver
