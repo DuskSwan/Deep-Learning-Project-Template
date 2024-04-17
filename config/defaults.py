@@ -16,6 +16,8 @@ from yacs.config import CfgNode as CN
 
 _C = CN()
 _C.DEVICE = "cuda"
+_C.SEED = 0
+_C.DATA_TYPE = 'float'  # or double
 
 # -----------------------------------------------------------------------------
 # MODEL
@@ -44,20 +46,27 @@ _C.INPUT.PIXEL_MEAN = [0.1307, ]
 _C.INPUT.PIXEL_STD = [0.3081, ]
 
 # -----------------------------------------------------------------------------
-# Dataset
-# -----------------------------------------------------------------------------
-_C.DATASETS = CN()
-# List of the dataset names for training, as present in paths_catalog.py
-_C.DATASETS.TRAIN = ()
-# List of the dataset names for testing, as present in paths_catalog.py
-_C.DATASETS.TEST = ()
-
-# -----------------------------------------------------------------------------
 # DataLoader
 # -----------------------------------------------------------------------------
 _C.DATALOADER = CN()
 # Number of data loading threads
-_C.DATALOADER.NUM_WORKERS = 8
+_C.DATALOADER.NUM_WORKERS = 0
+
+# -----------------------------------------------------------------------------
+# TRAIN
+# -----------------------------------------------------------------------------
+_C.TRAIN = CN()
+_C.TRAIN.BATCH_SIZE = 32
+_C.TRAIN.CHECKPOINT_PERIOD = 10
+_C.TRAIN.NEED_CHRCKPOINT = False
+
+# -----------------------------------------------------------------------------
+# INFERENCE
+# -----------------------------------------------------------------------------
+_C.INFERENCE = CN()
+_C.INFERENCE.BATCH_SIZE = 1
+_C.INFERENCE.MODEL_PATH = r'output\model.pth'
+_C.INFERENCE.TEST_CONTENT = r''
 
 # ---------------------------------------------------------------------------- #
 # Solver
@@ -101,3 +110,13 @@ _C.TEST.WEIGHT = ""
 # ---------------------------------------------------------------------------- #
 _C.OUTPUT = CN()
 _C.OUTPUT.DIR = "outputs"
+
+# -----------------------------------------------------------------------------
+# LOG
+# -----------------------------------------------------------------------------
+_C.LOG = CN()
+_C.LOG.DIR = "./log"
+_C.LOG.ITER_INTERVAL = 1
+_C.LOG.EPOCH_INTERVAL = 10
+_C.LOG.OUTPUT_TO_FILE = True # 是否输出到文件，默认输出到控制台
+_C.LOG.PREFIX = "default" # 输出到文件的命名前缀
