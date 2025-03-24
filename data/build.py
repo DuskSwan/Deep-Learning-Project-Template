@@ -2,7 +2,7 @@
 
 from torch.utils import data
 
-from .datasets.mnist import MNIST
+from torchvision.datasets import MNIST
 from .transforms import build_transforms
 
 
